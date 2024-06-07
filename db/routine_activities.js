@@ -125,6 +125,7 @@ module.exports = {
   addActivityToRoutine,
   getAllRoutineActivities,
   getRoutineActivitiesByRoutine,
+  updateRoutine,
   updateRoutineActivity,
   destroyRoutineActivity,
   canEditRoutineActivity,

@@ -34,6 +34,8 @@ async function getActivityByName(name){
     throw error;
   }
 }
+
+
 async function getActivitiesByRoutineId(id) {
   try {
     const { rows: activities } = await client.query(`

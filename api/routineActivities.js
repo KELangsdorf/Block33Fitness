@@ -1,9 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const { updateRoutineActivity, canEditRoutineActivity, destroyRoutineActivity, getRoutineActivityById } = require('../db');
+const { updateRoutineActivity, canEditRoutineActivity, destroyRoutineActivity, getRoutineActivityById, getAllRoutineActivities } = require('../db');
 const client = require('../db/client');
 const { requireUser, requiredNotSent } = require('./utils')
 
+
+//GET /api/routine_activities/:routineActivityId
+//in postman POST request to login as sandra
+//input her token into Authorization
+//in the body input "duration and count and change them"
+//click send, duration is 10 now and count is 20 for activity 4.
+router.get("/", async (req, res, next) => {
+  try {
+    const routines = await getAllRoutineActivities();
+    res.send(routines);
+  } catch (error) {
+    next(error);
+  }
+})
 
 
 // PATCH /api/routine_activities/:routineActivityId
@@ -32,6 +46,9 @@ router.patch('/:routineActivityId', requireUser, requiredNotSent({requiredParams
 });
 
 // DELETE /api/routine_activities/:routineActivityId
+//once authorized, you can input the route by ID
+//DELETE click Submit and it deletes.
+//confirmed the GET request its gone.
 router.delete('/:routineActivityId', requireUser, async (req, res, next) => {
   try {
     if(!await canEditRoutineActivity(req.params.routineActivityId, req.user.id)) {
